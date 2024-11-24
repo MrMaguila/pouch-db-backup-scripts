@@ -1,6 +1,9 @@
 import sys
-from datetime import date, strftime
+from datetime import date
+from shutil import make_archive
+
 from configs import PROJECT_ID, BUCKET_NAME, POUCH_DB_DATA_FOLDER, POUCH_DB_CONFIGS_FOLDER
+
 from google.cloud import storage
 
 
@@ -19,8 +22,11 @@ if __name__ == "__main__":
     else:
         bucket = storage_client.bucket(BUCKET_NAME)
     
-    data_backup = bucket.blob("data-" + date.today().strftime("%d-%m-/%Y"))
-    configs_backup = bucket.blob("configs-" + date.today().strftime("%d-%m-/%Y"))
+    data_backup = bucket.blob("data-backup.zip")
+    configs_backup = bucket.blob("configs-backup.zip")
+    
+    make_archive(POUCH_DB_DATA_FOLDER + ".zip", 'zip', POUCH_DB_DATA_FOLDER)
+    make_archive(POUCH_DB_CONFIGS_FOLDER + ".zip", 'zip', POUCH_DB_CONFIGS_FOLDER)
 
-    data_backup.upload_from_filename(POUCH_DB_DATA_FOLDER, if_generation_match=0)
-    configs_backup.upload_from_filename(POUCH_DB_CONFIGS_FOLDER, if_generation_match=0)
+    data_backup.upload_from_filename(POUCH_DB_DATA_FOLDER + ".zip")
+    configs_backup.upload_from_filename(POUCH_DB_CONFIGS_FOLDER + ".zip")
