@@ -18,7 +18,7 @@ if __name__ == "__main__":
         bucket = new_bucket
     else:
         bucket = storage_client.bucket(BUCKET_NAME)
-        
+    
     data_backup = bucket.blob("data-" + date.today().strftime("%d-%m-/%Y"))
     configs_backup = bucket.blob("configs-" + date.today().strftime("%d-%m-/%Y"))
 
