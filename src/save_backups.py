@@ -25,9 +25,9 @@ if __name__ == "__main__":
     data_backup = bucket.blob("data-backup.zip")
     configs_backup = bucket.blob("configs-backup.zip")
     
-    # TODO: compress these files. (Even though they are just a few KiB by now)
-    make_archive("data-backup", 'zip', POUCH_DB_DATA_FOLDER)
-    make_archive("configs-backup", 'zip', POUCH_DB_CONFIGS_FOLDER)
+    # TODO: compress these files (Even though they are just a few KBytes by now).
+    make_archive("/tmp/pouchdb/data-backup", 'zip', POUCH_DB_DATA_FOLDER)
+    make_archive("/tmp/pouchdb/configs-backup", 'zip', POUCH_DB_CONFIGS_FOLDER)
 
-    data_backup.upload_from_filename("data-backup.zip")
-    configs_backup.upload_from_filename("configs-backup.zip")
+    data_backup.upload_from_filename("/tmp/pouchdb/data-backup.zip")
+    configs_backup.upload_from_filename("/tmp/pouchdb/configs-backup.zip")
