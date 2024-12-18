@@ -8,6 +8,8 @@ from google.cloud import storage
 
 
 if __name__ == "__main__":
+    """ Saves the backup files in a google cloud storage bucket"""
+    
     storage_client = storage.Client(project=PROJECT_ID)
     buckets = storage_client.list_buckets()
     
@@ -26,8 +28,8 @@ if __name__ == "__main__":
     configs_backup = bucket.blob("configs-backup.zip")
     
     # TODO: compress these files (Even though they are just a few KBytes by now).
-    make_archive("/tmp/pouchdb/data-backup", 'zip', POUCH_DB_DATA_FOLDER)
-    make_archive("/tmp/pouchdb/configs-backup", 'zip', POUCH_DB_CONFIGS_FOLDER)
+    make_archive("/tmp/pouchdb/old/data-backup", 'zip', POUCH_DB_DATA_FOLDER)
+    make_archive("/tmp/pouchdb/old/configs-backup", 'zip', POUCH_DB_CONFIGS_FOLDER)
 
-    data_backup.upload_from_filename("/tmp/pouchdb/data-backup.zip")
-    configs_backup.upload_from_filename("/tmp/pouchdb/configs-backup.zip")
+    data_backup.upload_from_filename("/tmp/pouchdb/old/data-backup.zip")
+    configs_backup.upload_from_filename("/tmp/pouchdb/old/configs-backup.zip")
